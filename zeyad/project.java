@@ -184,25 +184,25 @@ public void updateCartDisplay() {
                 double total = quantity * product.getPrice();
                 totalPrice += total; // Add individual item price to total
 
-                String itemString = product.getName() + " (x" + quantity + ") - $" + String.format("%.2f", total);
+                String itemString = product.getName() + " (x" + quantity + ") " + String.format("%.2f EGP", total);
                 cartList.getItems().add(itemString);
             }
         }
 
         // Add the ListView to the cart scene
-        gridPane.getChildren().add(cartList); 
-    
+        gridPane.getChildren().add(cartList);
+
         // Remove existing total price label
         for (Node node : gridPane.getChildren()) {
-            if (node instanceof Label && ((Label) node).getText().startsWith("Total Price:")) {
+            if (node instanceof Label && ((Label) node).getText().startsWith("Total Price = ")) {
                 gridPane.getChildren().remove(node);
                 break;
             }
         }
 
         // Display the total price
-        Label totalPriceLabel = new Label("Total Price: $" + String.format("%.2f", totalPrice));
-        gridPane.add(totalPriceLabel, 0, 2); 
+        Label totalPriceLabel = new Label("Total Price = " + String.format("%.2f EGP", totalPrice));
+        gridPane.add(totalPriceLabel, 0, 2);
     }
 
 }
