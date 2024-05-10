@@ -23,7 +23,7 @@ public class HelloApplication extends Application {
     Scene scene, cartScene, paymentScene;
     TableView<Product> table;
     TextField userQuantityInput;
-    ArrayList<CartItem> cart; // Assuming you'll use an ArrayList for the cart
+    ArrayList<CartItem> cart;
     GridPane gridPane;
     HBox shoppingCartH;
 
@@ -143,7 +143,7 @@ public class HelloApplication extends Application {
     }
 
     public void addToCartClicked() {
-        // Get the selected product (assuming you have logic to identify it)
+        // Get the selected product
         Product selectedProduct = table.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
             System.out.println("Please select a product first.");
@@ -173,36 +173,36 @@ public class HelloApplication extends Application {
 
 
 public void updateCartDisplay() {
-    ListView<String> cartList = new ListView<>(); // Create a new ListView
+        ListView<String> cartList = new ListView<>(); // Create a new ListView
 
-    double totalPrice = 0.0; // Initialize total price
+        double totalPrice = 0.0; // Initialize total price
 
-    if (cart != null) { // Check if cart exists
-        for (CartItem item : cart) {
-            Product product = item.getProduct();
-            int quantity = item.getQuantity();
-            double total = quantity * product.getPrice();
-            totalPrice += total; // Add individual item price to total
+        if (cart != null) { // Check if cart exists
+            for (CartItem item : cart) {
+                Product product = item.getProduct();
+                int quantity = item.getQuantity();
+                double total = quantity * product.getPrice();
+                totalPrice += total; // Add individual item price to total
 
-            String itemString = product.getName() + " (x" + quantity + ") - " + String.format("%.2f EGP", total);
-            cartList.getItems().add(itemString);
+                String itemString = product.getName() + " (x" + quantity + ") - $" + String.format("%.2f", total);
+                cartList.getItems().add(itemString);
+            }
         }
-    }
 
-    // Add the ListView to the cart scene
-    gridPane.getChildren().add(cartList); // Adjust this line depending on your scene layout
-
-    // Remove existing total price label
-    for (Node node : gridPane.getChildren()) {
-        if (node instanceof Label && ((Label) node).getText().startsWith("Total Price:")) {
-            gridPane.getChildren().remove(node);
-            break;
+        // Add the ListView to the cart scene
+        gridPane.getChildren().add(cartList); 
+    
+        // Remove existing total price label
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof Label && ((Label) node).getText().startsWith("Total Price:")) {
+                gridPane.getChildren().remove(node);
+                break;
+            }
         }
-    }
 
-    // Display the total price (add a Label or Text control)
-    Label totalPriceLabel = new Label("Total Price = " + String.format("%.2f EGP", totalPrice));
-    gridPane.add(totalPriceLabel, 0, 2);
-}
+        // Display the total price
+        Label totalPriceLabel = new Label("Total Price: $" + String.format("%.2f", totalPrice));
+        gridPane.add(totalPriceLabel, 0, 2); 
+    }
 
 }
