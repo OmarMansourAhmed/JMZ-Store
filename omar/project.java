@@ -1,4 +1,3 @@
-
 package org.example.demo7;
 
 import javafx.application.Application;
@@ -60,7 +59,7 @@ public class HelloApplication extends Application {
         emailField.setStyle("-fx-border-color: #070707; -fx-border-width: 1px;");
         emailField.setPromptText("Email");
 
-        // Create payment method buttons
+        // payment method buttons
         Button payOnDeliveryButton = new Button("Pay On Delivery");
         Button creditButton = new Button("Pay with Credit");
 
@@ -68,7 +67,7 @@ public class HelloApplication extends Application {
         GridPane gridPane = new GridPane();
         gridPane.setVgap(10);
         gridPane.setHgap(10);
-        gridPane.setPadding(new Insets(30, 0, 0, 60));
+        gridPane.setPadding(new Insets(55, 0, 0, 110));
 
         gridPane.add(new Label("Name:"), 0, 0);
         gridPane.add(nameField, 1, 0);
@@ -83,7 +82,7 @@ public class HelloApplication extends Application {
         buttonBox.getChildren().addAll(payOnDeliveryButton, creditButton);
         gridPane.add(buttonBox, 1, 3);
 
-        // Event handling for "Pay with Cash"
+        // Event handling for "Pay on Delivery"
         payOnDeliveryButton.setOnAction(event -> {
             try {
                 validateFields(nameField.getText(), addressField.getText(), emailField.getText()); // Validate fields
@@ -92,11 +91,21 @@ public class HelloApplication extends Application {
                 customer.setCustomerAddress(addressField.getText());
                 customer.setCustomerEmail(emailField.getText());
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Cash Payment");
-                alert.setHeaderText("Thank You For Shopping With Us");
-                alert.setContentText("You have selected to pay with cash.");
-                alert.showAndWait();
+                if(addressField.getText().contains("cairo")||addressField.getText().contains("Cairo")){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Cash Payment");
+                    alert.setHeaderText("Thank You For Shopping With Us");
+                    alert.setContentText("Your Delivery fees is $50");
+                    alert.showAndWait();
+                }
+                else{
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Cash Payment");
+                    alert.setHeaderText("Thank You For Shopping With Us");
+                    alert.setContentText("Your Delivery fees is $80");
+                    alert.showAndWait();
+                }
+
             }catch (ValidationException | InvalidNameException e){
                 showError(e.getMessage());
             }
@@ -157,7 +166,7 @@ public class HelloApplication extends Application {
         });
 
         // Create a scene and set it on the stage
-        Scene scene = new Scene(gridPane, 350, 250);
+        Scene scene = new Scene(gridPane, 450, 350);
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
