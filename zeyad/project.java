@@ -3,10 +3,8 @@ package org.example.shoppingcart;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,19 +12,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
+
 
 public class HelloApplication extends Application {
     Stage window;
     Scene scene, cartScene, paymentScene;
     TableView<Product> table;
     TextField userQuantityInput;
-    ArrayList<CartItem> cart;
+    Label totalPriceLabel = new Label();
+    ArrayList<CartItem> cart; // Assuming you'll use an ArrayList for the cart
     GridPane gridPane;
-    HBox shoppingCartH;
-
+    ListView<String> cartList = new ListView<>();
     @Override
     public void start(Stage stage) throws IOException {
         window = stage;
@@ -61,9 +59,7 @@ public class HelloApplication extends Application {
 
         //This button change the scene to the cart scene
         Button nextButton = new Button("Go To Cart");
-        nextButton.setOnAction(e -> {
-            window.setScene(cartScene);
-        });
+        nextButton.setOnAction(e -> window.setScene(cartScene));
 
         //Back button in cart scene
         Button backButton = new Button("Back");
@@ -76,6 +72,10 @@ public class HelloApplication extends Application {
         //Go to payment button
         Button goToPaymentButton = new Button("Go To Payment");
         goToPaymentButton.setOnAction(e -> window.setScene(paymentScene));
+
+        //Remove from Cart button
+        Button removeFromCart = new Button("Remove From Cart");
+        removeFromCart.setOnAction(e -> removeFromCartClicked());
 
         HBox hBox = new HBox();
         hBox.setPadding(new Insets(10, 10, 10, 10));
@@ -97,7 +97,8 @@ public class HelloApplication extends Application {
         VBox vBox = new VBox();
         vBox.getChildren().addAll(table, hBox, hBox2);
 
-
+        Label yourCartLabel = new Label("Shopping CART!");
+        totalPriceLabel.setText("Total Price = 0 EGP");
 
         //Grid Pane in the cart scene
 
@@ -105,18 +106,26 @@ public class HelloApplication extends Application {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(8);
         gridPane.setHgap(10);
-        GridPane.setConstraints(backButton, 10, 25);
-        GridPane.setConstraints(goToPaymentButton, 15, 25);
-        //GridPane.setConstraints(cartTable,0,0);
-        gridPane.getChildren().addAll(backButton,goToPaymentButton);
+        yourCartLabel.setStyle("-fx-font-size: 15pt;");
+        GridPane.setConstraints(yourCartLabel, 0, 0,3,1);
+        GridPane.setConstraints(backButton, 0, 4);
+        GridPane.setConstraints(goToPaymentButton, 2, 4);
+        GridPane.setConstraints(removeFromCart, 0, 2);
+        GridPane.setConstraints(cartList, 0, 1, 3, 1); // Spanning 3 columns and 1 row
+        totalPriceLabel.setStyle("-fx-font-size: 15pt;");
+        GridPane.setConstraints(totalPriceLabel, 0, 3, 3, 1); // Spanning 2 columns and 1 row
 
+        gridPane.getChildren().addAll(backButton,goToPaymentButton,removeFromCart,cartList,totalPriceLabel,yourCartLabel);
 
+        HBox cartSceneHBox = new HBox();
+        cartSceneHBox.getChildren().add(gridPane);
+        cartSceneHBox.setAlignment(Pos.CENTER);
 
-        cartScene = new Scene(gridPane, 600, 600);
+        cartScene = new Scene(cartSceneHBox, 600, 600);
 
         //paymentScene= new Scene(vBox1,600,600);
 
-        //By mansoor
+        //Payment Scene
         VBox vv = new VBox(10);
         paymentScene = new Scene(vv, 600, 600);
         vv.getChildren().addAll(backButton2);
@@ -136,8 +145,8 @@ public class HelloApplication extends Application {
     public ObservableList<Product> getProduct() {
         ObservableList<Product> products = FXCollections.observableArrayList();
         products.add(new Product("Laptop", 10000.00, 20));
-        products.add(new Product("Coffee", 55.00, 15));
-        products.add(new Product("Mac Book", 20000.00, 10));
+        products.add(new Product("Keyboard", 200.00, 15));
+        products.add(new Product("ASUS", 20000.00, 10));
         products.add(new Product("NotePad", 3000.00, 5));
         return products;
     }
@@ -146,7 +155,7 @@ public class HelloApplication extends Application {
         // Get the selected product
         Product selectedProduct = table.getSelectionModel().getSelectedItem();
         if (selectedProduct == null) {
-            System.out.println("Please select a product first.");
+            System.out.println("Please select a product first");
             return;
         }
 
@@ -159,22 +168,65 @@ public class HelloApplication extends Application {
             return;
         }
 
+        //check if userQuantity is within stock limits
+        if (userQuantity > selectedProduct.getQuantity()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR); // Create an error alert
+            alert.setTitle("Insufficient Stock");
+            String errorMessage = "The selected product only has " + selectedProduct.getQuantity() + " items in stock.";
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+            return;
+        }
+
         if (cart == null) {
-            cart = new ArrayList<CartItem>(); // Create a cart if it doesn't exist
+            cart = new ArrayList<>(); // Create a cart if it doesn't exist
         }
         cart.add(new CartItem(selectedProduct, userQuantity));
 
 
-
         System.out.println("Added " + userQuantity + " of " + selectedProduct.getName() + " to cart!");
         updateCartDisplay();
-        window.setScene(cartScene);
     }
 
+    public void removeFromCartClicked() {
+        try {
+            ObservableList<String> selectedItems = cartList.getSelectionModel().getSelectedItems();
 
-public void updateCartDisplay() {
-        ListView<String> cartList = new ListView<>(); // Create a new ListView
+            if (!selectedItems.isEmpty()) {
+                for (String itemString : selectedItems) {
+                    // Parse the item string to identify the product
+                    String[] itemParts = itemString.split(" "); // Split by space
+                    String productName = itemParts[0];
 
+                    // Find the corresponding CartItem in the cart
+                    CartItem itemToRemove = null;
+                    for (CartItem item : cart) {
+                        if (item.getProduct().getName().equals(productName)) {
+                            itemToRemove = item;
+                            break;
+                        }
+                    }
+
+                    if (itemToRemove != null) {
+                        cart.remove(itemToRemove); // Remove the CartItem from the cart
+                        System.out.println("Item "+ itemString + " is Removed!");
+                    }
+                }
+
+                updateCartDisplay(); // Update the ListView with the modified cart
+            } else {
+                System.out.println("No items selected to remove.");
+            }
+        } catch (NullPointerException e){
+            //System.out.println(e);
+            System.out.println("Cart list or selection model is unavailable.");
+        }
+    }
+
+    public void updateCartDisplay() {
+        if (cartList != null) { // Check cartList
+            cartList.getItems().clear(); // Clear previous items
+        }
         double totalPrice = 0.0; // Initialize total price
 
         if (cart != null) { // Check if cart exists
@@ -189,20 +241,9 @@ public void updateCartDisplay() {
             }
         }
 
-        // Add the ListView to the cart scene
-        gridPane.getChildren().add(cartList);
 
-        // Remove existing total price label
-        for (Node node : gridPane.getChildren()) {
-            if (node instanceof Label && ((Label) node).getText().startsWith("Total Price = ")) {
-                gridPane.getChildren().remove(node);
-                break;
-            }
-        }
+        totalPriceLabel.setText("Total Price = " + String.format("%.2f EGP", totalPrice));
 
-        // Display the total price
-        Label totalPriceLabel = new Label("Total Price = " + String.format("%.2f EGP", totalPrice));
-        gridPane.add(totalPriceLabel, 0, 2);
     }
 
 }
