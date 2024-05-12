@@ -1,0 +1,62 @@
+package com.example.jana;
+
+
+public class Laptops extends Products implements Warranty {
+    protected String processor;
+    protected double screenSize;
+
+    public Laptops() {
+    }
+
+    public Laptops(String name,double price,int inStock,String processor, double screenSize) {
+        super(name,price,inStock);
+        this.processor = processor;
+        this.screenSize = screenSize;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
+
+    public double getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(double screenSize) {
+        this.screenSize = screenSize;
+    }
+
+    //@Override
+   /* public String toString() {
+        return "Laptops{" +
+                "processor='" + processor + '\'' +
+                ", screenSize=" + screenSize +
+                '}';
+    }
+
+    */
+
+    @Override
+    public String warrantyType() {
+
+            switch((int) this.screenSize){
+                case 12:
+                    return "6 months";
+                case 15:
+                    return "1 year";
+                case 17:
+                    return "2 year";
+                default:
+                    return "No Warranty";
+
+            }
+
+        }
+
+
+}
+
