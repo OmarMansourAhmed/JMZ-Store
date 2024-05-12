@@ -1,0 +1,42 @@
+package com.example.jana;
+
+public class Accessories extends Products implements Warranty{
+    String connectionType;
+    boolean ledRGB;
+
+Accessories(){
+
+}
+    Accessories(String name,double price,int inStock, String connectionType, boolean ledRGB){
+        super(name,price,inStock);
+        this.connectionType=connectionType;
+        this.ledRGB=ledRGB;
+    }
+
+    public String getConnectionType() {
+        return connectionType;
+    }
+
+    public void setConnectionType(String connectionType) {
+        this.connectionType = connectionType;
+    }
+
+    public boolean isLedRGB() {
+        return ledRGB;
+    }
+
+    public void setLedRGB(boolean ledRGB) {
+        this.ledRGB = ledRGB;
+    }
+
+    @Override
+    public String warrantyType(){
+       return "6 months";
+
+    }
+
+    boolean isAvailable(){
+        return false;
+        //if();
+    }
+}
