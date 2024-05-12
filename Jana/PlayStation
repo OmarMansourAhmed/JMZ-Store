@@ -1,0 +1,37 @@
+package com.example.jana;
+
+public class PlayStation extends Products implements Warranty {
+    protected String model;
+
+    public PlayStation() {
+    }
+
+    public PlayStation(String name , double price , int inStock ,String model) {
+        super(name,price,inStock);
+        this.model = model;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+
+    @Override
+    public String warrantyType() {
+        switch (this.model) {
+            case "PS3":
+                return "6 months";
+            case "PS4":
+                return "1 year";
+            case "PS5":
+                return "2 year";
+            default:
+                return "No Warranty";
+        }
+    }
+
+}
