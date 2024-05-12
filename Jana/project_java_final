@@ -599,6 +599,10 @@ TableView<Mouse> table6;
 
         Collections.sort(Product_initial);
 
+        for(Products i:Product_initial){
+            System.out.println(i.toString());
+        }
+
         Button back_from_admin=new Button("Log Out");
         Button back_from_customer=new Button("Back to main page");
 
@@ -1458,7 +1462,7 @@ promoButton.setOnAction(e->{
                 cvvField.setStyle("-fx-border-color: #070707; -fx-border-width: 1px;");
                 cvvField.setPromptText("CVV");
 
-                creditGrid.add(new Label("Card Holder Name:"), 0, 0);
+                creditGrid.add(new Label("Card Number:"), 0, 0);
                 creditGrid.add(cardHolderField, 1, 0);
 
                 creditGrid.add(new Label("CVV:"), 0, 1);
@@ -1508,14 +1512,18 @@ promoButton.setOnAction(e->{
         laptops= FXCollections.observableArrayList();
         laptops.add(new Laptops("hp",50000,1,"i7",15.6));
         laptops.add(new Laptops("lenovo",30000,2,"i5",14));
+        laptops.add(new Laptops("Asus",60000,5,"i9",17));
         Product_initial.add(new Laptops("hp",50000,3,"i7",15.6));
         Product_initial.add(new Laptops("lenovo",30000,4,"i5",14));
+        Product_initial.add(new Laptops("Asus",60000,5,"i9",17));
         return laptops;
 
     }
     public ObservableList<MobilePhones> get2product(){
         mobiles= FXCollections.observableArrayList();
         mobiles.add(new MobilePhones("iphone",10000,5,2,128,"4G"));
+        mobiles.add(new MobilePhones("LC",6000,8,3,256,"3G"));
+        Product_initial.add(new MobilePhones("iphone",10000,6,2,128,"4G"));
         Product_initial.add(new MobilePhones("iphone",10000,6,2,128,"4G"));
         return mobiles;
 
@@ -1526,7 +1534,9 @@ promoButton.setOnAction(e->{
    public ObservableList<PlayStation> get3product(){
         playstation= FXCollections.observableArrayList();
        playstation.add(new PlayStation("ps5",15000,7,"2020"));
+       playstation.add(new PlayStation("ps4",14000,6,"2018"));
        Product_initial.add(new PlayStation("ps5",15000,8,"2020"));
+       Product_initial.add(new PlayStation("ps4",14000,6,"2018"));
         return playstation;
     }
 
@@ -1535,7 +1545,9 @@ promoButton.setOnAction(e->{
     public ObservableList<HeadSets> get4product(){
         headSets= FXCollections.observableArrayList();
         headSets.add(new HeadSets("p9",500,9,"wireless",true,true));
+        headSets.add(new HeadSets("AppleMax",10000,5,"wireless",false,true));
         Product_initial.add(new HeadSets("p9",500,10,"wireless",true,true));
+        Product_initial.add(new HeadSets("AppleMax",10000,5,"wireless",false,true));
         return headSets;
 
     }
@@ -1543,14 +1555,18 @@ promoButton.setOnAction(e->{
     public ObservableList<Keyboard> get5product(){
         keyboards= FXCollections.observableArrayList();
          keyboards.add(new Keyboard("key1",200,3,"wired",true,"Black"));
+         keyboards.add(new Keyboard("key2",700,5,"wireless",false,"Blue"));
         Product_initial.add(new Keyboard("key1",200,4,"wired",true,"Black"));
+        Product_initial.add(new Keyboard("key2",700,5,"wireless",false,"Blue"));
         return keyboards;
 
     }
     public ObservableList<Mouse> get6product(){
         mouse= FXCollections.observableArrayList();
          mouse.add(new Mouse("mouse1",150,5,"wireless",true,7000));
+         mouse.add(new Mouse("mouse2",300,4,"wireless",false,5000));
         Product_initial.add(new Mouse("mouse1",150,7,"wireless",true,7000));
+        Product_initial.add(new Mouse("mouse2",300,4,"wireless",false,5000));
         return mouse;
 
     }
