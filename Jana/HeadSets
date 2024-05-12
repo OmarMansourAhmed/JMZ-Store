@@ -1,0 +1,22 @@
+package com.example.jana;
+
+public class HeadSets extends Accessories{
+
+    boolean noiseCancellation;
+
+    HeadSets(){
+    }
+    HeadSets(String name,double price, int instock,String connectionType, boolean ledRGB,boolean noiseCancellation){
+        super(name,price,instock,connectionType,ledRGB);
+
+        this.noiseCancellation=noiseCancellation;
+    }
+
+    public boolean isNoiseCancellation() {
+        return noiseCancellation;
+    }
+
+    public void setNoiseCancellation(boolean noiseCancellation) {
+        this.noiseCancellation = noiseCancellation;
+    }
+}
