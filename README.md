@@ -3,10 +3,15 @@ This project implements an online shopping system using Object-Oriented Programm
 ## Features
 -Browse and search for products.  
 
--Add items to a shopping cart.
--Manage cart quantities (update and remove).
--User login.
--Order confirmation and processing.
--Admin functionality for product management.
+-Add items to a shopping cart.  
+
+-Manage cart quantities (update and remove).  
+
+-User login.  
+
+-Order confirmation and processing.  
+
+-Admin functionality for product management.  
+
 -Payments Methods (Cash and Credit ).
 
