@@ -15,4 +15,4 @@ This project implements an online shopping system using Object-Oriented Programm
 
 -Payments Methods (Cash and Credit ).
 ## UML
-!["Detailed UML For Better Understanding"](Team 23.png)
+![UML Image For Better Understanding](Team 23.png)
