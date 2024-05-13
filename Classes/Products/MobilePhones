@@ -1,1 +1,56 @@
+package com.example.jana;
+
+
+public class MobilePhones extends Products implements Warranty{
+    protected int numberOfCameras;
+    protected int storage;
+    protected String cellular;
+
+    public MobilePhones(){}
+
+    public MobilePhones(String name , double price , int inStock , int numberOfCameras, int storage, String cellular) {
+        super(name,price,inStock);
+        this.numberOfCameras = numberOfCameras;
+        this.storage = storage;
+        this.cellular = cellular;
+    }
+
+    public int getNumberOfCameras() {
+        return numberOfCameras;
+    }
+
+    public void setNumberOfCameras(int numberOfCameras) {
+        this.numberOfCameras = numberOfCameras;
+    }
+
+    public int getStorage() {
+        return storage;
+    }
+
+    public void setStorage(int storage) {
+        this.storage = storage;
+    }
+
+    public String getCellular() {   return cellular ;    }
+
+    public void setCellular(String cellular) { this.cellular = cellular; }
+
+
+    @Override
+    public String warrantyType() {
+
+        switch(this.cellular){
+            case "3G":
+                return "6 months";
+            case "4G":
+                return "1 year";
+            case "5G":
+                return "2 year";
+            default:
+                return "No Warranty";
+
+        }
+
+    }
+}
 
