@@ -1,1 +1,25 @@
+package com.example.jana;
+public class CheckOut {
+    int orderId;
+    static int numberOfOrders=1;
+    Customer customer;
+    ShoppingCart shoppingCart;
 
+
+    public CheckOut(Customer customer, ShoppingCart shoppingCart) {
+        this.customer = customer;
+        this.shoppingCart = shoppingCart;
+        this.orderId = numberOfOrders;
+        numberOfOrders++;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+    double getShippingFees(){
+        String address=customer.getCustomerAddress();
+        if(address.contains("cairo")||address.contains("Cairo"))
+            return shoppingCart.getTotalPrice()+50;
+        else return shoppingCart.getTotalPrice()+80;
+    }   
+}
