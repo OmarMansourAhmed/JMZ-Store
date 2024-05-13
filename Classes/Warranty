@@ -1,1 +1,6 @@
+package com.example.jana;
+
+public interface Warranty {
+    public String warrantyType();
+}
 
