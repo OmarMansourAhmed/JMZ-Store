@@ -1,1 +1,20 @@
+package com.example.jana;
 
+public class Keyboard extends Accessories{
+    String switchesType;
+
+    Keyboard(){}
+
+    Keyboard(String name,double price ,int instock,String connectionType, boolean ledRGB,String switchesType){
+        super(name,price,instock,connectionType,ledRGB);
+        this.switchesType=switchesType;
+    }
+
+    public String getSwitchesType() {
+        return switchesType;
+    }
+
+    public void setSwitchesType(String switchesType) {
+        this.switchesType = switchesType;
+    }
+}
