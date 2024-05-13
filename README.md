@@ -14,5 +14,4 @@ This project implements an online shopping system using Object-Oriented Programm
 -Admin functionality for product management.  
 
 -Payments Methods (Cash and Credit ).
-## UML
-![UML Image For Better Understanding](Team 23.png)
+### For Better Understanding Check the UML Image in Repo Files.
