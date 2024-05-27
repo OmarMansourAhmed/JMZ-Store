@@ -14,7 +14,8 @@ This project implements an online shopping system using Object-Oriented Programm
 -Admin functionality for product management.  
 
 -Payments Methods (Cash and Credit ).
-### For Better Understanding Check the UML Image in Repo Files.
+### UML Image
+![Team 23](https://github.com/OmarMansourAhmed/JMZ-Store/assets/168648445/7e302b9f-b0a6-462c-b08a-3e1ac17793e7)
 
 ### Working Demo
 https://github.com/OmarMansourAhmed/JMZ-Store/assets/168648445/9a9ecfcb-0216-4db6-a56e-f2a8aadf3831
